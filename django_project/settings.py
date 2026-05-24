@@ -139,3 +139,20 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# Crear superusuario automáticamente si no existe (solo para producción/despliegue)
+if os.environ.get('RAILWAY_ENVIRONMENT') or True:  # Se ejecutará siempre que quieras
+    try:
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        if not User.objects.filter(username='admin').exists():
+            User.objects.create_superuser(
+                username='carlos',
+                email='carlos213244@gmail.com',
+                password='jose2306'   # ¡Cámbiala por una más segura!
+            )
+            print("Superusuario creado automáticamente.")
+        else:
+            print("El superusuario ya existe.")
+    except Exception as e:
+        print(f"Error al crear superusuario: {e}")
