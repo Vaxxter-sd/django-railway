@@ -88,9 +88,8 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('mysql://uk2coc2buc33hwlo:3pGDG80KJ0zLm7xDLIcu@b1itk5vuskow4a4mljf8-mysql.services.clever-cloud.com:3306/b1itk5vuskow4a4mljf8'))
+    'default': dj_database_url.config(default='mysql://uk2coc2buc33hwlo:3pGDG80KJ0zLm7xDLIcu@b1itk5vuskow4a4mljf8-mysql.services.clever-cloud.com:3306/b1itk5vuskow4a4mljf8')
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
