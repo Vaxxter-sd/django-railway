@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-*uhfq)i9gx6iruge6e^9=86x#li1t5d(q&8to*1svdumnyrx5(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [*]
 
 
 # Application definition
@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default': dj_database_url.config(default=os.getenv('mysql://uk2coc2buc33hwlo:3pGDG80KJ0zLm7xDLIcu@b1itk5vuskow4a4mljf8-mysql.services.clever-cloud.com:3306/b1itk5vuskow4a4mljf8'))
 }
 
 
