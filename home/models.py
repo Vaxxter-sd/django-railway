@@ -5,6 +5,8 @@ class LeadFromFlask(models.Model):
     correo = models.EmailField(max_length=100)
     tipo_escuela = models.CharField(max_length=50)
     fecha_registro = models.DateTimeField(auto_now_add=True)
+    estado = models.CharField(max_length=20, default='Nuevo')
+    notas = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False          # No crear la tabla en la BD
