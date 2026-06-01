@@ -9,8 +9,8 @@ class LeadFromFlask(models.Model):
     notas = models.TextField(blank=True, null=True)
 
     class Meta:
-        managed = False          # No crear la tabla en la BD
-        db_table = 'leads'       # Nombre exacto de la tabla en Clever Cloud
+        managed = False
+        db_table = 'leads'
         verbose_name = 'Lead desde Flask'
         verbose_name_plural = 'Leads desde Flask'
 
