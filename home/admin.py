@@ -1,24 +1,19 @@
 from django.contrib import admin
+from import_export import resources
+from import_export.admin import ExportActionModelAdmin
 from .models import LeadFromFlask
-import csv
-from django.http import HttpResponse
 
-class LeadFromFlaskAdmin(admin.ModelAdmin):
+class LeadResource(resources.ModelResource):
+    class Meta:
+        model = LeadFromFlask
+        fields = ('id', 'nombre', 'correo', 'tipo_escuela', 'fecha_registro', 'estado', 'notas')
+        export_order = ('id', 'nombre', 'correo', 'tipo_escuela', 'fecha_registro', 'estado', 'notas')
+
+@admin.register(LeadFromFlask)
+class LeadFromFlaskAdmin(ExportActionModelAdmin):
+    resource_class = LeadResource
     list_display = ('nombre', 'correo', 'tipo_escuela', 'fecha_registro', 'estado')
+    list_editable = ('estado',)        # ← permite cambiar estado directamente en la lista
     list_filter = ('estado', 'tipo_escuela')
     search_fields = ('nombre', 'correo')
-    list_editable = ('estado',)   # permite editar estado directamente en la lista
-    actions = ['exportar_a_csv']
-
-    def exportar_a_csv(self, request, queryset):
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="leads.csv"'
-        writer = csv.writer(response)
-        writer.writerow(['ID', 'Nombre', 'Correo', 'Tipo escuela', 'Fecha registro', 'Estado', 'Notas'])
-        for lead in queryset:
-            writer.writerow([lead.id, lead.nombre, lead.correo, lead.tipo_escuela,
-                             lead.fecha_registro.strftime('%Y-%m-%d %H:%M'), lead.estado, lead.notas])
-        return response
-    exportar_a_csv.short_description = "Exportar seleccionados a CSV"
-
-admin.site.register(LeadFromFlask, LeadFromFlaskAdmin)
+    readonly_fields = ('fecha_registro',)
