@@ -88,9 +88,24 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
+# 📌 Base de datos de CAPTURA (Clever Cloud) para sincronización
+# 📌 Base de datos del CRM (SQLite) donde Django gestiona los leads
 DATABASES = {
-    'default': dj_database_url.config(default='mysql://uk2coc2buc33hwlo:3pGDG80KJ0zLm7xDLIcu@b1itk5vuskow4a4mljf8-mysql.services.clever-cloud.com:3306/b1itk5vuskow4a4mljf8')
+    'default': {  # ← Base de datos del CRM (SQLite) – donde verás los leads en el admin
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'captura': {  # ← Base de datos de Flask (Clever Cloud) – solo para lectura
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'b1itk5vuskow4a4mljf8',
+        'USER': 'uk2coc2buc33hwlo',
+        'PASSWORD': '3pGDG80KJ0zLm7xDLIcu',
+        'HOST': 'b1itk5vuskow4a4mljf8-mysql.services.clever-cloud.com',
+        'PORT': '3306',
+    }
 }
+
+DATABASE_ROUTERS = ['home.routers.CapturaRouter']  # ← enrutador para sincronización
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
